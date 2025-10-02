@@ -1,14 +1,12 @@
+---
+const themeControllerClassname = "dui-theme-controller";
+---
+
 <label class="dui-toggle text-base-content">
-  <input type="checkbox" value="dark" class="dui-theme-controller" />
+  <input type="checkbox" value="dark" class={themeControllerClassname} />
 
   <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2"
-      fill="none"
-      stroke="currentColor"
-    >
+    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor">
       <circle cx="12" cy="12" r="4"></circle>
       <path d="M12 2v2"></path>
       <path d="M12 20v2"></path>
@@ -22,19 +20,15 @@
   </svg>
 
   <svg aria-label="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-    ><g
-      stroke-linejoin="round"
-      stroke-linecap="round"
-      stroke-width="2"
-      fill="none"
-      stroke="currentColor"
+    ><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"
       ><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></g
     ></svg
   >
 </label>
 
 <script>
-  const controller = document.querySelector<HTMLInputElement>(".dui-theme-controller");
+  const themeControllerClassname = "dui-theme-controller";
+  const controller = document.querySelector<HTMLInputElement>(themeControllerClassname);
   if (!controller) {
     throw new Error("Theme controller not found");
   }

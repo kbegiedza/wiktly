@@ -1,4 +1,5 @@
 ---
+import { cc } from "@ulfsoft/ulfkit";
 import ThemeSwitcher from "./ThemeSwitcher.astro";
 
 interface Props {
@@ -9,13 +10,14 @@ interface Props {
 const { animated, rounded } = Astro.props
 ---
 
-<nav id="navbar" class="dui-drawer sticky top-0 z-50 mx-auto">
+<nav id="navbar" class={cc("dui-drawer sticky top-0 z-50 mx-auto", { "w-3/4": rounded })}>
   <input id="navbar-drawer" type="checkbox" class="dui-drawer-toggle" />
   <div class="dui-drawer-content flex flex-col">
     <!-- Navbar -->
     <div
       id="navbar-top"
-      class="dui-navbar bg-base-300/70 backdrop-blur-md shadow-xl w-full pl-4 pr-8"
+      data-rounded={rounded ? "true" : "false"}
+      class={cc("dui-navbar bg-base-300/70 backdrop-blur-md shadow-xl w-full pl-4 pr-8", { "rounded-4xl mt-4": rounded })}
     >
       <div class="flex-none lg:hidden">
         <label
@@ -68,13 +70,16 @@ const { animated, rounded } = Astro.props
   const minimumWidthPercentage = 75;
   const scrollFullThreshold = 350;
 
-  function handleScroll(element: HTMLElement, navbarTop: HTMLElement) {
-    const progress = Math.min(window.scrollY / scrollFullThreshold, 1);
+  function setAnimationTime(element: HTMLElement, navbarTop: HTMLElement, progress: number) {
 
     element.style.width = `${Math.max((1 - progress / 2) * 100, minimumWidthPercentage)}%`;
 
     navbarTop.style.marginTop = `${Math.min(progress * 2, 1)}rem`;
-    navbarTop.style.borderRadius = `${Math.max(progress, 0) * 4}rem`;
+
+    const isRounded = navbarTop.dataset.rounded === "true";
+    if (isRounded) {
+      navbarTop.style.borderRadius = `${Math.max(progress, 0) * 4}rem`;
+    }
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -85,10 +90,11 @@ const { animated, rounded } = Astro.props
       throw new Error("Navbar element not found");
     }
 
-    handleScroll(navbar, navbarTop);
+    setAnimationTime(navbar, navbarTop, 0);
 
     document.addEventListener("scroll", (e) => {
-      handleScroll(navbar, navbarTop);
+      const progress = Math.min(window.scrollY / scrollFullThreshold, 1);
+      setAnimationTime(navbar, navbarTop, progress);
     });
   });
 </script>

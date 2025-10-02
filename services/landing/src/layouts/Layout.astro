@@ -1,0 +1,49 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html data-theme="light" lang="en" class="transition-colors duration-300">
+  <head>
+    <script is:inline>
+      const darkTheme = "dark";
+      const lightTheme = "light";
+      const themeStorageKey = "theme";
+      const documentThemeKey = "data-theme";
+
+      function watchForThemeChanges() {
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+          const newColorScheme = event.matches ? darkTheme : lightTheme;
+          localStorage.setItem(themeStorageKey, newColorScheme);
+          document.documentElement.setAttribute(documentThemeKey, newColorScheme);
+        });
+      }
+
+      function initializeTheme() {
+        const hasThemePreference = localStorage.getItem(themeStorageKey) !== null;
+
+        if (hasThemePreference) {
+          document.documentElement.setAttribute(documentThemeKey, localStorage.getItem(themeStorageKey));
+        } else {
+          const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+          const theme = prefersDark ? darkTheme : lightTheme;
+
+          document.documentElement.setAttribute(documentThemeKey, theme);
+          localStorage.setItem(themeStorageKey, theme);
+        }
+      }
+
+      initializeTheme();
+      watchForThemeChanges();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

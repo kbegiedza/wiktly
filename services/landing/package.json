@@ -10,16 +10,17 @@
         "test": "vitest"
     },
     "dependencies": {
-        "@astrojs/vue": "^5.1.1",
-        "@lucide/astro": "^0.544.0",
-        "@tailwindcss/vite": "^4.1.13",
-        "astro": "^5.14.0",
-        "tailwindcss": "^4.1.13",
-        "vue": "^3.5.22"
+        "@astrojs/vue": "5.1.1",
+        "@lucide/astro": "0.544.0",
+        "@tailwindcss/vite": "4.1.14",
+        "@ulfsoft/ulfkit": "0.0.2",
+        "astro": "5.14.1",
+        "tailwindcss": "4.1.14",
+        "vue": "3.5.22"
     },
     "devDependencies": {
         "@biomejs/biome": "2.2.4",
-        "daisyui": "^5.1.23",
-        "vitest": "^3.2.4"
+        "daisyui": "5.1.26",
+        "vitest": "3.2.4"
     }
 }

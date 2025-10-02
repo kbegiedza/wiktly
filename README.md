@@ -2,13 +2,13 @@
 
 **Wiktly** is a privacy-first, self-hosted platform that helps you **store recipes, plan meals, and track nutrition** — all in one place, fully under your control.  
 
-No ads. No subscriptions. Just you, your food, and your data.  
+Just you and your favorite food.  
+No fluff and ads.  
 
----
-
+<!-- 
 ## ✨ Features  
 
-<!-- - 📖 **Recipe Management**  
+- 📖 **Recipe Management**  
   Collect, import, and organize your favorite recipes with tags, categories, images, and ingredient lists.  
 
 - 🔍 **Smart Search & Filtering**  
@@ -29,8 +29,6 @@ No ads. No subscriptions. Just you, your food, and your data.
 - 🔒 **Self-Hosted & Extensible**  
   Your recipes, your server, your rules. Fully open source and ready to extend.   -->
 
----
-
 ## 🚀 Why Wiktly?  
 
 Most recipe and meal planner apps are locked behind paywalls, ads, or subscriptions. **Wiktly** gives you freedom:  
@@ -40,22 +38,16 @@ Most recipe and meal planner apps are locked behind paywalls, ads, or subscripti
 - Customize features to your workflow  
 - Stay distraction-free in the kitchen  
 
----
-
 ## 📦 Getting Started  
 
 1. Clone the repo  
 2. Follow the installation guide (Docker/Kubernetes support coming soon 🚀)  
 3. Start organizing your cooking with Wiktly!  
 
----
-
 ## 🤝 Contributing  
 
 Wiktly is open source and community-driven. Contributions are welcome!  
 Whether it’s bug reports, feature requests, or PRs — all help is appreciated.  
-
----
 
 ## 📜 License  
 

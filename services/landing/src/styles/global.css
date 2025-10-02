@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+  prefix: "dui-";
+  exclude: rootscrollgutter;
+}
+
+/**
+  * Light (default)
+  * https://daisyui.com/theme-generator/#theme=eJx9kt1unDAQhV_FQqrUSsGyx3-Qt_HCkEVh8coGJU3Ud6_XTllYSC-48Jxvzpwx_ixGe8HiuRj6l_NUPBVl6W3bz6EMOGAzOR817vGylroehzbWGVUPysm9xzr8q4b-A9dGjILaaHenu3ByvsU09vqeCi1ep_MNSqfR9eEWmMdT4wbny9Cc8WGHLJxswJIzFiX3OjTnn3X1gzDCfj0ysGZ0ZChjnEClqTBqR4s1DZmWmYYd3LhxwnFaGoDnBh0bFK2qjf2I8-TtsMBcZlhlGMQBvJtwsGQ_dm7R9U2nXNcEhImRN6ZhbhoM4Q7XCTaEa6CyWqNv1o_9-LKgJqOVJPEmmDRrFr1PD-DLVN1IkJwIJalg1WPW_U4mXQQXMbOmGg4if9cDPGbXlHNxEP748mKTJpwBBQ67Lb7NJomQgvJ6s83V9xfrfy9wlV4XB0OAGcrMBg4YvdsNbu6vRdP4rXEb917lSOz2v39N30UWLNmqaAs11bU6TLFr--9zzGmOe3KqFjs7D1Ga_IxPxdVjhz7ESa_Fc2eHgH_-AoaKTAo
+*/
+
+/**
+  * Dark
+  * https://daisyui.com/theme-generator/#theme=eJyNk-GumzAMhV8lQpq0SZcoMUmA-zYpmBVdSqoEtLtNe_e5oaOhFGm_UOzP9vFJ-J2N9oLZe9Za_5G9ZXnubdvPIQ84YDM5Tynp8ZKmuh6HluKC66fMyX1SHP5FQ_8L00aCg97kHp0eiZPzLcax188YaPE6nW9QPI2uDze9kk6NG5zPQ3PG7QpL_GQD5lIIyriPoTl_lfCFCS4UMDCKm1p_e6YhoUE8aM1LvaeLlC4XWhJN30Lu6MaNE47TWlGbWCFKBqrkVW3SihHnydvh_6Tf4f2EaplQLBN0lRb1Y-dW0sT2IBUDXfNKbtqHuWkwhBUuozHEygq4FkXK_rB-7MfvD7aObKVYZUh-mbLofXwVdwkqSlCGScNVUT9r3W-3OB41kyVCvdB8ZEkUL3gJL7Qf1QApE0AmwW6Jo7uVmkngCjYVV99frP-5sjq2l7qiW5K8Npt3EJBatyl-9wmAES3lhra0dKLidk9MvJh96CW9lMJwAy8lHJppWFlwU6m9lF0J_Y6rqBY7Ow-U6-wQ8C27euzQh_gXv09-xj9_AeosTkk
+*/

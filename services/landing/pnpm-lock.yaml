@@ -16,10 +16,10 @@ importers:
         version: 0.544.0(astro@5.14.1(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.3)(typescript@5.9.2))
       '@tailwindcss/vite':
         specifier: 4.1.14
-        version: 4.1.14(vite@6.3.6(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1))
+        version: 4.1.14(vite@7.1.8(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1))
       '@ulfsoft/ulfkit':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 0.0.3
+        version: 0.0.3
       astro:
         specifier: 5.14.1
         version: 5.14.1(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1)(rollup@4.52.3)(typescript@5.9.2)
@@ -857,8 +857,8 @@ packages:
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@ulfsoft/ulfkit@0.0.2':
-    resolution: {integrity: sha512-qlNQHOKk617DKGxl8//p/WEYhbxf+bN4wr02zVNesGbAZBWxbcVgvlH+5tCqBZuDMG9omBAg0XNvvfnAhcPQ3g==}
+  '@ulfsoft/ulfkit@0.0.3':
+    resolution: {integrity: sha512-ENHTqgrRajXcJwt/rH5kGXiFrapzz8i7rlD/eucId5wQNdSv52vlwtQzk9UpX05skr7CEf2Qohkdc8IV0gWlKg==}
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
@@ -3117,12 +3117,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.1.14
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.14
 
-  '@tailwindcss/vite@4.1.14(vite@6.3.6(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1))':
+  '@tailwindcss/vite@4.1.14(vite@7.1.8(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1))':
     dependencies:
       '@tailwindcss/node': 4.1.14
       '@tailwindcss/oxide': 4.1.14
       tailwindcss: 4.1.14
-      vite: 6.3.6(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1)
+      vite: 7.1.8(@types/node@24.6.2)(jiti@2.6.1)(lightningcss@1.30.1)
 
   '@types/chai@5.2.2':
     dependencies:
@@ -3160,7 +3160,7 @@ snapshots:
 
   '@types/unist@3.0.3': {}
 
-  '@ulfsoft/ulfkit@0.0.2': {}
+  '@ulfsoft/ulfkit@0.0.3': {}
 
   '@ungap/structured-clone@1.3.0': {}
 

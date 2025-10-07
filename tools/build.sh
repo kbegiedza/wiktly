@@ -2,4 +2,4 @@
 
 set -e
 
-docker build -t wiktly:local -f services/api/Dockerfile services/api
+docker build -t wiktly/api:local -f services/backend/api.Dockerfile services/backend

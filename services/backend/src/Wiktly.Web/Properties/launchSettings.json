@@ -6,7 +6,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "hotReloadEnabled": true,
-      "applicationUrl": "http://*:50002",
+      "applicationUrl": "http://*:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -16,7 +16,7 @@
       "dotnetRunMessages": true,
       "hotReloadEnabled": true,
       "launchBrowser": true,
-      "applicationUrl": "https://*:50002;http://*:50003",
+      "applicationUrl": "https://*:8080;http://*:8443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

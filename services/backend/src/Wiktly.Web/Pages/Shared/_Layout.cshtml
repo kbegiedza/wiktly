@@ -8,13 +8,12 @@
 
     <link rel="stylesheet" href="~/css/tw.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Wiktly.Web.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/wikt.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand bg-indigo-400 text-white" asp-area="" asp-page="/Index">Wiktly.Web</a>
+            <div class="container bg-red">
+                <a class="navbar-brand bg-indigo-200 text-white" asp-area="" asp-page="/Index">Wiktly.Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -44,7 +43,7 @@
         </div>
     </footer>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/wiktly.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

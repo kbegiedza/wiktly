@@ -7,10 +7,11 @@
         {
             "name": "Wiktly.Web Debug",
             "type": "dotnet",
-            "preLaunchTask": "dotnet: build",
+            // TODO: add start tw watch task
+            "preLaunchTask": "dotnet: watch Wiktly.Web",
+            // TODO: "postDebugTask": "terminate tw watch",
             "request": "launch",
             "projectPath": "${workspaceFolder}/services/backend/src/Wiktly.Web/Wiktly.Web.csproj"
         }
-
     ]
 }

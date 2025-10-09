@@ -1,3 +1,21 @@
 services:
-  api:
-    image: "wiktly/api:local"
+  postgres:
+    image: "postgres:18-bookworm"
+    container_name: "wiktly-db"
+    environment:
+      - POSTGRES_USER=wiktlyUsr
+      - POSTGRES_PASSWORD=wiktlyPa$$w0rd
+      - POSTGRES_DB=dev-wiktly
+    ports:
+      - "5432:5432"
+    volumes:
+      - wiktly-postgres-data:/var/lib/postgresql/data
+    networks:
+      - wiktly-network
+
+networks:
+  wiktly-network:
+    driver: bridge
+
+volumes:
+  wiktly-postgres-data:

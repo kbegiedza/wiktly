@@ -1,0 +1,4 @@
+{
+    // "build"
+    // TODO: add pnpx @tailwindcss/cli -i ./Styles/source.css -o ./wwwroot/css/tw.css --watch as a task for pre-build for web
+}

@@ -1,11 +1,12 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
     "http": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "http://*:8081",
+      "launchBrowser": true,
+      "hotReloadEnabled": true,
+      "applicationUrl": "http://*:8080",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -13,8 +14,9 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "https://*:8081;http://*:8444",
+      "hotReloadEnabled": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://*:8080;http://*:8443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

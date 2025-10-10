@@ -1,3 +1,10 @@
 <Solution>
-  <Project Path="src/Wiktly.API/Wiktly.API.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/Wiktly.API/Wiktly.API.csproj" />
+    <Project Path="src/Wiktly.Web/Wiktly.Web.csproj" />
+    <Project Path="src\Wiktly.Core\Wiktly.Core.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\Wiktly.API.Tests\Wiktly.API.Tests.csproj" Type="Classic C#" />
+  </Folder>
 </Solution>

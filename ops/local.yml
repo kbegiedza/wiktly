@@ -1,11 +1,11 @@
 services:
   postgres:
     image: "postgres:18-bookworm"
-    container_name: "wiktly-db"
+    container_name: "wiktly-postgres"
     environment:
       - POSTGRES_USER=wiktlyUsr
       - POSTGRES_PASSWORD=wiktlyPa$$w0rd
-      - POSTGRES_DB=dev-wiktly
+      - POSTGRES_DB=local_wiktly
     ports:
       - "5432:5432"
     volumes:

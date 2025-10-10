@@ -1,9 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
+using Wiktly.Web.AppInitialization;
+
+var builder = AppInitialization.Initialize(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
-var app = builder.Build();
+using var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -13,13 +17,18 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseApiVersioning(configuration);
+app.UseCors();
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.MapControllers();
 app.MapRazorPages()
    .WithStaticAssets();
 

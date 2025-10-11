@@ -63,19 +63,26 @@ public static class AppInitialization
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
-        services.AddAuthentication(o =>
-                {
-                    o.DefaultScheme = IdentityConstants.ApplicationScheme;
-                    o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-                })
-                .AddIdentityCookies(b => { });
-
+        // TODO: Replace with real email sender
         services.AddTransient<IEmailSender, Wiktly.Web.Areas.Identity.Services.NoOpEmailSender>();
 
-        services.AddAuthentication(options =>
+        const string cookieOrBearerScheme = "CookieOrBearerScheme";
+
+        services.AddAuthentication(o =>
                 {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultScheme = cookieOrBearerScheme;
+                })
+                .AddPolicyScheme(cookieOrBearerScheme, cookieOrBearerScheme, o =>
+                {
+                    o.ForwardDefaultSelector = context =>
+                    {
+                        if (context.Request.Path.StartsWithSegments("/api"))
+                        {
+                            return JwtBearerDefaults.AuthenticationScheme;
+                        }
+
+                        return IdentityConstants.ApplicationScheme;
+                    };
                 })
                 .AddJwtBearer(options =>
                 {
@@ -91,7 +98,8 @@ public static class AppInitialization
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = key,
                     };
-                });
+                })
+                .AddIdentityCookies(o => { });
 
         return hostBuilder;
     }

@@ -10,7 +10,7 @@ namespace Ulfsoft.Web.Mvc;
 [Route(RoutePrefix)]
 public class BaseApiController : ControllerBase
 {
-    private const string RoutePrefix = "v{version:apiVersion}/[controller]";
+    private const string RoutePrefix = "/api/v{version:apiVersion}/[controller]";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BaseApiController"/> class.

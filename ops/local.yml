@@ -1,21 +1,23 @@
+name: local-wiktly
+
 services:
   postgres:
     image: "postgres:18-bookworm"
-    container_name: "wiktly-postgres"
-    environment:
-      - POSTGRES_USER=wiktlyUsr
-      - POSTGRES_PASSWORD=wiktlyPa$$w0rd
-      - POSTGRES_DB=local_wiktly
+    container_name: "postgres"
     ports:
       - "5432:5432"
     volumes:
-      - wiktly-postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+      - ./create_dbs.sh:/docker-entrypoint-initdb.d/create_dbs.sh
     networks:
-      - wiktly-network
+      - backend
+    env_file:
+      - path: local.env
+        required: true
 
 networks:
-  wiktly-network:
+  backend:
     driver: bridge
 
 volumes:
-  wiktly-postgres-data:
+  postgres-data:

@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Wiktly.Web.AppInitialization;
 
 var builder = AppInitialization.Initialize(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(o =>
+{
+});
 builder.Services.AddControllers();
 
 using var app = builder.Build();

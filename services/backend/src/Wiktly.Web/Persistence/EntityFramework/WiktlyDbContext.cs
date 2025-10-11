@@ -2,7 +2,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Wiktly.Web.Infrastructure.Persistence.EntityFramework;
+namespace Wiktly.Web.Persistence.EntityFramework;
 
 public class WiktlyDbContext : IdentityDbContext
 {
@@ -19,7 +19,7 @@ public class WiktlyDbContext : IdentityDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        _logger.LogTrace("Searching for assembly for configurations");
+        _logger.LogTrace("Searching for assembly to apply configurations");
 
         var assembly = Assembly.GetAssembly(typeof(WiktlyDbContext)) ?? Assembly.GetCallingAssembly();
 

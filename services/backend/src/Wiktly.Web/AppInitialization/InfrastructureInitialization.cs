@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Ulfsoft.Extensions.DependencyInjection;
 using Wiktly.Web.Configuration;
-using Wiktly.Web.Infrastructure.Persistence.EntityFramework;
+using Wiktly.Web.Persistence.EntityFramework;
 
 namespace Wiktly.Web.AppInitialization;
 

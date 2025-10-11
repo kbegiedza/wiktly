@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Ulfsoft.Extensions.DependencyInjection;
@@ -10,7 +10,8 @@ public static class ServiceCollectionExtensions
     {
         var config = builder.Configuration.GetRequiredConfiguration<T>();
 
-        builder.Services.AddSingleton(config);
+        builder.Services.TryAddSingleton(config);
+
         return builder;
 
     }

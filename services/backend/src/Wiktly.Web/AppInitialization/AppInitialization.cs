@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Ulfsoft.Extensions.DependencyInjection;
+using Wiktly.Web.Areas.Identity.Configuration;
 using Wiktly.Web.Areas.Identity.Data;
+using Wiktly.Web.Areas.Identity.Services;
 using Wiktly.Web.Configuration;
 using Console = Ulfsoft.Constants.Console;
 
@@ -48,12 +50,48 @@ public static class AppInitialization
         const string iss = "issuer";
         var key = default(SecurityKey);
 
-        var databaseConfig = hostBuilder.Configuration.GetRequiredConfiguration<NpgsqlConfiguration>("Authentication:Persistence");
+        hostBuilder.AddConfiguration<AuthenticationConfiguration>();
 
-        // Add framework services.
+        var configuration = hostBuilder.Configuration;
+        var authConfig = configuration.GetRequiredConfiguration<AuthenticationConfiguration>();
+
         services.AddDbContext<AuthDataContext>(options =>
+        {
             options.ConfigureWarnings(b => b.Log(CoreEventId.ManyServiceProvidersCreatedWarning))
-                   .UseNpgsql(databaseConfig.ConnectionString));
+                   .UseNpgsql(authConfig.ConnectionString);
+
+            options.UseOpenIddict();
+        });
+
+        services.AddOpenIddict()
+                .AddCore(options =>
+                {
+                    options.UseEntityFrameworkCore()
+                           .UseDbContext<AuthDataContext>();
+                })
+                .AddServer(options =>
+                {
+                    options.SetTokenEndpointUris("/api/v1/auth/login");
+
+                    options.AllowPasswordFlow();
+
+                    var symmetricKey = Convert.FromBase64String(authConfig.EncryptionKey);
+                    options.AddEncryptionKey(new SymmetricSecurityKey(symmetricKey));
+
+                    // TODO: replace with .AddEncryptionCertificate
+                    // see https://documentation.openiddict.com/configuration/encryption-and-signing-credentials
+                    options.AddEphemeralSigningKey();
+
+                    var coreBuilder = options.UseAspNetCore()
+                                             .EnableTokenEndpointPassthrough();
+
+                    if (hostBuilder.Environment.IsDevelopment())
+                    {
+                        coreBuilder.EnableStatusCodePagesIntegration();
+
+                        options.DisableAccessTokenEncryption();
+                    }
+                });
 
         services.AddMvc();
 
@@ -64,14 +102,13 @@ public static class AppInitialization
                 .AddDefaultTokenProviders();
 
         // TODO: Replace with real email sender
-        services.AddTransient<IEmailSender, Wiktly.Web.Areas.Identity.Services.NoOpEmailSender>();
+        services.AddTransient<IEmailSender, Areas.Identity.Services.NoOpEmailSender>();
 
+        services.AddHostedService<AuthInitService>();
+        
         const string cookieOrBearerScheme = "CookieOrBearerScheme";
 
-        services.AddAuthentication(o =>
-                {
-                    o.DefaultScheme = cookieOrBearerScheme;
-                })
+        services.AddAuthentication(o => { o.DefaultScheme = cookieOrBearerScheme; })
                 .AddPolicyScheme(cookieOrBearerScheme, cookieOrBearerScheme, o =>
                 {
                     o.ForwardDefaultSelector = context =>
@@ -129,6 +166,7 @@ public static class AppInitialization
     private static IHostApplicationBuilder AddConventions(this IHostApplicationBuilder hostBuilder)
     {
         var services = hostBuilder.Services;
+
         services.Configure<RouteOptions>(options =>
         {
             options.LowercaseUrls = true;

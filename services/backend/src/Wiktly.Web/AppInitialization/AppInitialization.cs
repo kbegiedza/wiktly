@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using OpenIddict.Validation.AspNetCore;
 using Ulfsoft.Extensions.DependencyInjection;
 using Wiktly.Web.Areas.Identity.Configuration;
 using Wiktly.Web.Areas.Identity.Data;
@@ -47,7 +48,7 @@ public static class AppInitialization
         // TODO: Replace with real values
         const string authority = "https://localhost";
         const string aud = "authenticated";
-        const string iss = "issuer";
+        const string issuer = "https://id.ulfsoft.com";
         var key = default(SecurityKey);
 
         hostBuilder.AddConfiguration<AuthenticationConfiguration>();
@@ -75,6 +76,8 @@ public static class AppInitialization
 
                     options.AllowPasswordFlow();
 
+                    // options.SetIssuer(issuer);
+
                     var symmetricKey = Convert.FromBase64String(authConfig.EncryptionKey);
                     options.AddEncryptionKey(new SymmetricSecurityKey(symmetricKey));
 
@@ -91,6 +94,12 @@ public static class AppInitialization
 
                         options.DisableAccessTokenEncryption();
                     }
+                })
+                .AddValidation(option =>
+                {
+                    option.UseLocalServer();
+
+                    option.UseAspNetCore();
                 });
 
         services.AddMvc();
@@ -105,38 +114,51 @@ public static class AppInitialization
         services.AddTransient<IEmailSender, Areas.Identity.Services.NoOpEmailSender>();
 
         services.AddHostedService<AuthInitService>();
-        
+
         const string cookieOrBearerScheme = "CookieOrBearerScheme";
 
-        services.AddAuthentication(o => { o.DefaultScheme = cookieOrBearerScheme; })
-                .AddPolicyScheme(cookieOrBearerScheme, cookieOrBearerScheme, o =>
-                {
-                    o.ForwardDefaultSelector = context =>
-                    {
-                        if (context.Request.Path.StartsWithSegments("/api"))
-                        {
-                            return JwtBearerDefaults.AuthenticationScheme;
-                        }
+        const bool useOpenIddictValidation = true;
 
-                        return IdentityConstants.ApplicationScheme;
-                    };
-                })
-                .AddJwtBearer(options =>
+        var authBuilder = services.AddAuthentication(o => { o.DefaultScheme = cookieOrBearerScheme; })
+                                  .AddPolicyScheme(cookieOrBearerScheme, cookieOrBearerScheme, o =>
+                                  {
+                                      o.ForwardDefaultSelector = context =>
+                                      {
+                                          if (!context.Request.Path.StartsWithSegments("/api"))
+                                          {
+                                              return IdentityConstants.ApplicationScheme;
+                                          }
+
+                                          if (useOpenIddictValidation)
+                                          {
+                                              return OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme;
+                                          }
+
+                                          return JwtBearerDefaults.AuthenticationScheme;
+
+                                      };
+                                  });
+
+        authBuilder.AddIdentityCookies(o => { });
+
+        if (!useOpenIddictValidation)
+        {
+            authBuilder.AddJwtBearer(options =>
+            {
+                options.Authority = authority;
+                options.RequireHttpsMetadata = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.Authority = authority;
-                    options.RequireHttpsMetadata = true;
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidIssuer = iss,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidAudience = aud,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = key,
-                    };
-                })
-                .AddIdentityCookies(o => { });
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidAudience = aud,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                };
+            });
+        }
 
         return hostBuilder;
     }

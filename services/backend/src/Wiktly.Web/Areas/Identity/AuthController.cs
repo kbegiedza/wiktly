@@ -13,59 +13,40 @@ namespace Wiktly.Web.Areas.Identity;
 [Authorize]
 public class AuthController : BaseApiController
 {
-    private readonly IOpenIddictTokenManager _tokenManager;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
 
     public AuthController(ILogger<AuthController> logger,
-                          SignInManager<IdentityUser> signInManager,
                           UserManager<IdentityUser> userManager,
-                          IOpenIddictTokenManager tokenManager)
+                          SignInManager<IdentityUser> signInManager)
         : base(logger)
     {
         _userManager = userManager;
-        _tokenManager = tokenManager;
         _signInManager = signInManager;
     }
-
-    // [AllowAnonymous]
-    // [HttpPost("login")]
-    // public async Task<IActionResult> Login(LoginPayload payload)
-    // {
-    //     var user = await _userManager.FindByEmailAsync(payload.Username);
-    //
-    //     if (user is null)
-    //     {
-    //         return Unauthorized("Invalid email or password.");
-    //     }
-    //
-    //     var signIn = await _signInManager.CheckPasswordSignInAsync(user, payload.Password, false);
-    //
-    //     if (!signIn.Succeeded)
-    //     {
-    //         return Unauthorized("Invalid email or password.");
-    //     }
-    //
-    //     if (signIn.IsLockedOut)
-    //     {
-    //         return Forbid("This account is locked out.");
-    //     }
-    //
-    //     if (signIn.RequiresTwoFactor)
-    //     {
-    //         return BadRequest("Not supported yet.");
-    //     }
-    //
-    //     return Ok(new LoginResponse($"dummy-token-for: {payload.Email}"));
-    // }
 
     [HttpGet("me")]
     public IActionResult Me()
     {
-        return Ok(new
+        var userIdentity = User.Identity;
+
+        if (userIdentity is null)
         {
-            Name = User.Identity?.Name ?? "unknown"
-        });
+            return NotFound("User not found");
+        }
+        
+        var claims = User.Claims
+                         .DistinctBy(c => c.Type)
+                         .ToDictionary(c => c.Type, c => c.Value);
+
+        var authDetails = new
+        {
+            userIdentity.Name,
+            userIdentity.IsAuthenticated,
+            Claims = claims
+        };
+
+        return Ok(authDetails);
     }
 
     [AllowAnonymous]
@@ -96,7 +77,7 @@ public class AuthController : BaseApiController
 
         return SignIn(new ClaimsPrincipal(identity), OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }
-    
+
     /// <summary>
     /// Create a ClaimsIdentity for the user
     /// </summary>
@@ -110,7 +91,8 @@ public class AuthController : BaseApiController
         identity.SetClaim(OpenIddictConstants.Claims.Subject, await _userManager.GetUserIdAsync(user))
                 .SetClaim(OpenIddictConstants.Claims.Email, await _userManager.GetEmailAsync(user))
                 .SetClaim(OpenIddictConstants.Claims.Name, await _userManager.GetUserNameAsync(user))
-                .SetClaims(OpenIddictConstants.Claims.Role, (await _userManager.GetRolesAsync(user)).ToImmutableArray());
+                .SetClaims(OpenIddictConstants.Claims.Role,
+                    (await _userManager.GetRolesAsync(user)).ToImmutableArray());
 
         identity.SetScopes(new[]
         {
@@ -118,7 +100,7 @@ public class AuthController : BaseApiController
             OpenIddictConstants.Permissions.Scopes.Profile,
             OpenIddictConstants.Permissions.Scopes.Roles,
         });
-        
+
         return identity;
     }
 }

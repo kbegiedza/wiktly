@@ -22,5 +22,6 @@
     {
     }
 }</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=iddict/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=ulfsoft/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=wiktly/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

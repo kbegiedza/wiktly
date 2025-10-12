@@ -19,7 +19,7 @@ public class BaseApiController : ControllerBase
     public BaseApiController(ILogger logger)
     {
         Logger = logger;
-    }
+    } 
 
     /// <summary>
     /// Gets the logger instance for the controller.

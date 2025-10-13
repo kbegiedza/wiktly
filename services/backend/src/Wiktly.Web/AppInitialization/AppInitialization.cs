@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using OpenIddict.Abstractions;
 using OpenIddict.Validation.AspNetCore;
 using Ulfsoft.Extensions.DependencyInjection;
 using Wiktly.Web.Areas.Identity.Configuration;
@@ -72,9 +73,10 @@ public static class AppInitialization
                 })
                 .AddServer(options =>
                 {
-                    options.SetTokenEndpointUris("/api/v1/auth/login");
+                    options.SetTokenEndpointUris("/api/v1/auth/token");
 
-                    options.AllowPasswordFlow();
+                    options.AllowPasswordFlow()
+                           .AllowRefreshTokenFlow();
 
                     // options.SetIssuer(issuer);
 
@@ -118,6 +120,19 @@ public static class AppInitialization
         const string cookieOrBearerScheme = "CookieOrBearerScheme";
 
         const bool useOpenIddictValidation = true;
+
+        if (useOpenIddictValidation)
+        {
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
+                options.ClaimsIdentity.EmailClaimType = OpenIddictConstants.Claims.Email;
+
+                options.SignIn.RequireConfirmedAccount = false;
+            });
+        }
 
         var authBuilder = services.AddAuthentication(o => { o.DefaultScheme = cookieOrBearerScheme; })
                                   .AddPolicyScheme(cookieOrBearerScheme, cookieOrBearerScheme, o =>

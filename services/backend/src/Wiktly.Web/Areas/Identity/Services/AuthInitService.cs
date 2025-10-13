@@ -32,7 +32,6 @@ public class AuthInitService : IHostedService
         if (existingApp is not null)
         {
             _logger.LogInformation("Default application '{AppName}' already exists", appName);
-
             return;
         }
 

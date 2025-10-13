@@ -21,7 +21,7 @@ public static class InfrastructureInitializer
         var services = hostBuilder.Services;
         var dbConfig = hostBuilder.Configuration.GetRequiredConfiguration<NpgsqlConfiguration>("Persistence");
 
-        services.AddDbContextPool<WiktlyDbContext>(options =>
+        services.AddDbContextPool<WiktlyDataContext>(options =>
             options.UseNpgsql(dbConfig.ConnectionString, builder =>
             {
                 builder.ConfigureDataSource(dataSourceBuilder =>

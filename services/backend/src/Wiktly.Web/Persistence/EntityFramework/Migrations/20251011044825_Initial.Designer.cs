@@ -11,7 +11,7 @@ using Wiktly.Web.Persistence.EntityFramework;
 
 namespace Wiktly.Web.Persistence.EntityFramework.Migrations
 {
-    [DbContext(typeof(WiktlyDbContext))]
+    [DbContext(typeof(WiktlyDataContext))]
     [Migration("20251011044825_Initial")]
     partial class Initial
     {

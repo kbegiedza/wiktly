@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Wiktly.Web.Persistence.EntityFramework;
 
-public class WiktlyDbContext : IdentityDbContext
+public class WiktlyDataContext: DbContext
 {
-    private readonly ILogger<WiktlyDbContext> _logger;
+    private readonly ILogger<WiktlyDataContext> _logger;
 
-    public WiktlyDbContext(ILogger<WiktlyDbContext> logger,
-                           DbContextOptions<WiktlyDbContext> options)
+    public WiktlyDataContext(ILogger<WiktlyDataContext> logger,
+                           DbContextOptions<WiktlyDataContext> options)
         : base(options)
     {
         _logger = logger;
@@ -21,7 +21,7 @@ public class WiktlyDbContext : IdentityDbContext
 
         _logger.LogTrace("Searching for assembly to apply configurations");
 
-        var assembly = Assembly.GetAssembly(typeof(WiktlyDbContext)) ?? Assembly.GetCallingAssembly();
+        var assembly = Assembly.GetAssembly(typeof(WiktlyDataContext)) ?? Assembly.GetCallingAssembly();
 
         _logger.LogTrace("Applying configurations from assembly: {Assembly}", assembly.FullName);
 

@@ -5,7 +5,7 @@ set -e
 dotnet ef database update \
   --project services/backend/src/Wiktly.Web/Wiktly.Web.csproj \
   --startup-project services/backend/src/Wiktly.Web/Wiktly.Web.csproj \
-  --context Wiktly.Web.Persistence.EntityFramework.WiktlyDbContext \
+  --context Wiktly.Web.Persistence.EntityFramework.WiktlyDataContext \
   --configuration Debug \
   --verbose
 

@@ -15,8 +15,8 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "hotReloadEnabled": true,
-      "launchBrowser": true,
-      "applicationUrl": "https://*:8080;http://*:8443",
+      "launchBrowser": false,
+      "applicationUrl": "http://*:8080;https://*:8443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
